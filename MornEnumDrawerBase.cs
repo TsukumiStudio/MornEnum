@@ -2,12 +2,14 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace MornEnum
 {
     public abstract class MornEnumDrawerBase : PropertyDrawer
     {
         protected abstract string[] Values { get; }
+        protected abstract Object PingTarget { get; }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -25,6 +27,18 @@ namespace MornEnum
                 
                 if (Values.Length > 0)
                 {
+                    var dropdownRect = position;
+                    var buttonRect = position;
+                    
+                    // PingTargetがある場合は、ドロップダウンの幅を調整してボタン用のスペースを作る
+                    if (PingTarget != null)
+                    {
+                        var buttonWidth = 50f;
+                        dropdownRect.width -= buttonWidth + 5f;
+                        buttonRect.x = dropdownRect.xMax + 5f;
+                        buttonRect.width = buttonWidth;
+                    }
+                    
                     if (selectedIndex < 0)
                     {
                         selectedIndex = 0;
@@ -32,8 +46,17 @@ namespace MornEnum
                     }
                     else
                     {
-                        selectedIndex = EditorGUI.Popup(position, label.text, selectedIndex, Values);
+                        selectedIndex = EditorGUI.Popup(dropdownRect, label.text, selectedIndex, Values);
                         keyProperty.stringValue = Values[selectedIndex];
+                    }
+                    
+                    // PingTargetがある場合は「定義へ」ボタンを表示
+                    if (PingTarget != null)
+                    {
+                        if (GUI.Button(buttonRect, "定義へ"))
+                        {
+                            EditorGUIUtility.PingObject(PingTarget);
+                        }
                     }
                 }
                 else
