@@ -18,7 +18,7 @@ namespace MornEnum
             set => _key = Values[value];
         }
         protected abstract string[] Values { get; }
-        
+
         public static bool operator ==(MornEnumBase a, MornEnumBase b)
         {
             if (a is null && b is null) return true;
@@ -30,10 +30,15 @@ namespace MornEnum
         {
             return !(a == b);
         }
-        
+
         public override string ToString()
         {
             return _key;
+        }
+
+        public static implicit operator string(MornEnumBase enumBase)
+        {
+            return enumBase._key;
         }
     }
 }
