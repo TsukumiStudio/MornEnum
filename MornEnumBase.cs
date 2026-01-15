@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace MornEnum
+namespace MornLib
 {
     [Serializable]
     public abstract class MornEnumBase
@@ -29,6 +29,21 @@ namespace MornEnum
         public static bool operator !=(MornEnumBase a, MornEnumBase b)
         {
             return !(a == b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is MornEnumBase other)
+            {
+                return this == other;
+            }
+            
+            return false;
+        }
+        
+        public override int GetHashCode()
+        {
+            return _key != null ? _key.GetHashCode() : 0;
         }
 
         public override string ToString()

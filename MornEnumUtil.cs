@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MornEnum
+namespace MornLib
 {
     public static class MornEnumUtil<T> where T : Enum
     {

@@ -1,6 +1,6 @@
 {
     "name": "MornEnum",
-    "rootNamespace": "MornEnum",
+    "rootNamespace": "MornLib",
     "references": [
         "GUID:9fb3b15b1474476cbe64c6bd63468fb6"
     ],
